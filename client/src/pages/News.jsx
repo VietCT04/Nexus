@@ -72,7 +72,7 @@ const NewsComponent = () => {
             >
                 <option value="World">World</option>
                 <option value="Singaporean">Singaporean</option>
-
+                {console.log(userProfile)}
                 {userProfile && userProfile.nationality && (
                     <option value={userProfile.nationality}>{userProfile.nationality}</option>
                 )}

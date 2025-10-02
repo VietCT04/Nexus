@@ -94,22 +94,22 @@ const router = createBrowserRouter([
         path: "dashboard",
         element: <Dashboard />,
       },
-      // {
-      //   path: "logout",
-      //   element: <Logout />,
-      // },
-      // {
-      //   path: "profile",
-      //   element: <Profile />,
-      // },
-      // {
-      //   path: "news",
-      //   element: <NewsComponent/>,
-      // },
-      // {
-      //   path: "securityq",
-      //   element: <SecurityQuestion/>,
-      // }
+      {
+        path: "logout",
+        element: <Logout />,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
+      },
+      {
+        path: "news",
+        element: <NewsComponent/>,
+      },
+      {
+        path: "securityq",
+        element: <SecurityQuestion/>,
+      }
 
 
     ],

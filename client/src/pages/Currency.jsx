@@ -13,13 +13,12 @@ function CurrencyConverter() {
 
   const [fromCurrency, setFromCurrency] = useState('SGD');
   const [toCurrency, setToCurrency] = useState('UYU');
-  const [amount, setAmount] = useState('');             // keep as string for input
-  const [rate, setRate] = useState(null);               // number | null
-  const [convertedAmount, setConvertedAmount] = useState(null); // number | null
+  const [amount, setAmount] = useState('');       
+  const [rate, setRate] = useState(null);          
+  const [convertedAmount, setConvertedAmount] = useState(null); 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Pick default "to" currency from user nationality
   useEffect(() => {
     if (!userProfile?.nationality) return;
     switch (userProfile.nationality) {
@@ -38,10 +37,8 @@ function CurrencyConverter() {
     }
   }, [userProfile]);
 
-  // Log when convertedAmount actually updates (state updates are async)
   useEffect(() => {
     if (convertedAmount != null) {
-      // eslint-disable-next-line no-console
       console.log('Converted Amount State (after update):', convertedAmount);
     }
   }, [convertedAmount]);
