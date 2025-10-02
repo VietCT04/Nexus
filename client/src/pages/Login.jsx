@@ -39,7 +39,7 @@ const Login = () => {
         );
         
         toast.success("Login successful. Please verify your phone number to complete the sign-in process");
-        navigate("/phonenumotp", { state: { username:username,comingFrom: "login" } });
+        navigate("/dashboard", { state: { username:username,comingFrom: "login" } });
       } catch (err) {
         console.log(err);
         toast.error("Invalid login credentials. Please try again.");
