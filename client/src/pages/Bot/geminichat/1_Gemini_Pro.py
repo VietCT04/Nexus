@@ -30,7 +30,7 @@ if "history" not in st.session_state:
 genai.configure(api_key = st.session_state.app_key)
 
 # Initialize the model and start a chat session with any existing history.
-model = genai.GenerativeModel('gemini-pro')
+model = genai.GenerativeModel('gemini-2.5-flash')
 chat = model.start_chat(history = st.session_state.history)
 
 # Sidebar button to clear chat. This helps in managing the chat session effectively.
