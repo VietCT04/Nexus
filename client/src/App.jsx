@@ -3,7 +3,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { UserProvider } from "./contexts/UserContext.jsx";
 
-//import PhonenumOTP from "./pages/PhonenumOTP.jsx";
+import PhonenumOTP from "./pages/PhonenumOTP.jsx";
 import AmenitiesFinder from "./pages/Amenities.jsx";
 import CurrencyConverter from "./pages/Currency.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
@@ -78,10 +78,10 @@ const router = createBrowserRouter([
         path: "edit",
         element: <EditProfile />,
       },
-      // {
-      //   path: "phonenumotp",
-      //   element: <PhonenumOTP />,
-      // },
+      {
+        path: "phonenumotp",
+        element: <PhonenumOTP />,
+      },
       {
         path: "currency",
         element: <CurrencyConverter />,
