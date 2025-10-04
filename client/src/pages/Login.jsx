@@ -9,6 +9,7 @@ import axios from "axios";
 import {UserContext}  from '../contexts/UserContext';
 import { toast } from "react-toastify";
 
+
 /**
  * Login component handles user authentication and navigation to other parts of the application.
  * It provides inputs for username and password, along with the ability to toggle password visibility.
@@ -37,7 +38,7 @@ const Login = () => {
           "http://localhost:3000/api/v1/login",
           formData
         );
-        
+        updateToken(response.data.token); 
         toast.success("Login successful. Please verify your phone number to complete the sign-in process");
         navigate("/dashboard", { state: { username:username,comingFrom: "login" } });
       } catch (err) {

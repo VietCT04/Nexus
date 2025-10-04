@@ -40,8 +40,7 @@ async function userProfile(req, res, next) {
         return next();
       }
     }
-
-   
+    console.log(userId);
     const userProfile = await User.findById(userId);
     if (!userProfile) {
       return res.status(404).send('User not found');

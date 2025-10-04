@@ -47,7 +47,7 @@ export const UserProvider = ({ children }) => {
    */
   const fetchUserProfile = () => {
     console.log("I am gna fetch profile");
-    
+    console.log(token)
     if (token === "null") {
       console.log("i did not find anyth");
       setError('No token found. User is probably not logged in.');
