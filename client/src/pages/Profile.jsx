@@ -59,7 +59,7 @@ const Profile = () => {
             "http://localhost:3000/api/v1/register",
             formData
           );
-          updateToken(JSON.stringify(response.data.token));
+          updateToken(response.data.token);
           
           navigate("/profilepic");
         } catch (err) {
