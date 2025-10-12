@@ -130,65 +130,69 @@ function CurrencyConverter() {
 
   return (
     <div className="currency-main">
-      <div className="header-container">
-        <img src={backImage} alt="back" className="back-image" onClick={handleBackClick} />
-        <img src={logoImage} alt="Logo" className="logo-image" />
-        <div />
+  <div className="header-container">
+    <img src={backImage} alt="back" className="back-image" onClick={handleBackClick} />
+    <img src={logoImage} alt="Logo" className="logo-image" />
+    <div />
+  </div>
+
+  <h2>Currency Converter</h2>
+
+  <div className="converter-card">
+    <form onSubmit={handleSubmit} className="converter-form">
+      {/* From Section */}
+      <div className="section">
+        <p className="label">Amount</p>
+        <div className="currency-row">
+          <span className="currency-code">{fromCurrency}</span>
+          <input
+            type="number"
+            className="currency-input-box"
+            placeholder="Enter amount"
+            value={amount}
+            onChange={handleAmountChange}
+          />
+        </div>
       </div>
 
-      <h2>Currency Currency</h2>
-
-      <form onSubmit={handleSubmit}>
-        <div className="currency-group-container">
-          <div className="form-group">
-            <label htmlFor="fromCurrency">From Currency:</label>
-            <div className="currency-input">
-              <input
-                type="text"
-                id="fromCurrency"
-                value={fromCurrency}
-                onChange={(e) => setFromCurrency(e.target.value.toUpperCase())}
-              />
-              <button type="button" className="switch-button" onClick={switchCurrencies}>
-                ⇄
-              </button>
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="toCurrency">To Currency:</label>
-            <input
-              type="text"
-              id="toCurrency"
-              value={toCurrency}
-              onChange={(e) => setToCurrency(e.target.value.toUpperCase())}
-            />
-          </div>
-        </div>
-
-        <div className="form-group2">
-          <label htmlFor="amount">Amount:</label>
-          <input type="number" id="amount" value={amount} onChange={handleAmountChange} />
-        </div>
-
-        <button type="submit" className="convert-button" disabled={loading}>
-          Convert
+      {/* Divider with swap button */}
+      <div className="divider">
+        <button type="button" className="swap-button" onClick={switchCurrencies}>
+          ⇄
         </button>
-      </form>
+      </div>
 
-      {loading && <p className="loading">Loading...</p>}
-      {error && <p className="error">Error: {error}</p>}
-
-      {!loading && !error && (
-        <div id="convert-result">
-          <p>Rate: {rate != null ? rate : 'N/A'}</p>
-          <p>
-            Converted Amount:{' '}
-            {convertedAmount != null ? convertedAmount.toFixed(2) : '--'} {toCurrency}
-          </p>
+      {/* To Section */}
+      <div className="section">
+        <p className="label">Converted Amount</p>
+        <div className="currency-row">
+          <span className="currency-code">{toCurrency}</span>
+          <input
+            type="text"
+            className="currency-input-box"
+            value={
+              convertedAmount != null ? convertedAmount.toFixed(2) : ''
+            }
+            readOnly
+          />
         </div>
-      )}
-    </div>
+      </div>
+
+      <button type="submit" className="convert-button" disabled={loading}>
+        {loading ? 'Converting...' : 'Convert'}
+      </button>
+    </form>
+
+    {error && <p className="error">Error: {error}</p>}
+
+    {!loading && !error && rate != null && (
+      <p className="rate-text">
+        1 {fromCurrency} = {rate} {toCurrency}
+      </p>
+    )}
+  </div>
+</div>
+
   );
 }
 
