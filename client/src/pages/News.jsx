@@ -63,7 +63,7 @@ const NewsComponent = () => {
       </div>
       <div class="news-header">
         <div class="news-header-container">
-            <label for="news-selection">Select news category:</label>
+            <label for="news-selection">News Category:</label>
             <select 
                 id="news-selection"
                 class="news-selection"
@@ -78,8 +78,8 @@ const NewsComponent = () => {
                 )}
             </select>
         </div>
-    </div>
-    <div class="news-content"> 
+      </div>
+      <div class="news-content"> 
         {topArticle && (
             <div class="top-news" onClick={() => window.open(topArticle.url, '_blank')}>
                 <img 

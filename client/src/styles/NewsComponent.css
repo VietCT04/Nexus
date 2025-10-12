@@ -15,21 +15,47 @@
 
 .news-header {
   width: 100%; /* Ensure header takes full width of .news-main */
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between; /* Separate logo and selection */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  box-sizing: border-box;
 }
 
 .header-container {
-  margin: 25px 0px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 25px 0;
+}
+
+.back-image {
+  position: absolute;
+  left: 20px; /* Adjusted for better spacing */
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.back-image:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+.logo-image {
+  height: 50px;
+  object-fit: contain;
 }
 
 .news-header-container {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
 }
 
 .news-main label {
@@ -60,6 +86,11 @@
   text-align: center;
 }
 
+.top-news:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
 .top-news img {
   width: 100%;
   height: auto;
@@ -67,14 +98,17 @@
   object-fit: cover;
 }
 
-.top-news h2{
-  margin: 0;
-  font-size: 20px;
+.top-news h2 {
+  margin: 15px 20px 10px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #222;
 }
 
 .top-news h1, .top-news p {
-  padding: 0 10px;
-  font-size: 16px;
+  margin: 0 20px 20px;
+  font-size: 18px;
+  color: #555;
 }
 
 #cards-container {
@@ -89,21 +123,44 @@
   border-radius: 5px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease
 }
+
+.news-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
 .news-card img {
   width: 100%;
-  height: 200px;
+  height: 180px;
   object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
 .news-card div {
   padding: 15px;
 }
 
-.news-card h2{
-  font-size: 18px;
+.news-card h2 {
+  font-size: 17px;
+  font-weight: 600;
+  color: #222;
+  margin: 0 0 8px 0;
 }
 
-.news-card p, .news-card span{
+.news-card p {
   font-size: 14px;
+  color: #555;
+  margin: 0 0 8px 0;
+}
+
+.news-card span {
+  font-size: 13px;
+  color: #888;
+}
+
+.news-card:hover img {
+  transform: scale(1.05);
 }
