@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  width: 500px;
   min-height: 100vh;
   background-color: #f2f4f8;
 }
@@ -11,23 +12,25 @@
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center; /* center logo */
-  width: 100%;
-  margin-bottom: 20px;
+  justify-content: center; /* keeps logo centered */
+  width: 100%;             /* full width of screen */
+  max-width: none;         /* ignore previous max-width */
+  margin: 25px 0;
 }
+
 
 .back-image {
   position: absolute;
-  left: 4px;
-  width: 28px;
-  height: 28px;
+  left: 16px; /* distance from screen edge */
+  width: 35px;
+  height: 35px;
   cursor: pointer;
-  z-index: 10; /* ensures it's above the logo */
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .back-image:hover {
   transform: scale(1.1);
+  opacity: 0.8;
 }
 
 .logo-image {
@@ -40,13 +43,13 @@
   background-color: #ffffff;
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  padding: 24px;
+  padding: 32px; /* slightly more padding for breathing space */
   width: 100%;
-  max-width: 420px;
+  max-width: 540px; /* was 420px — wider layout */
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 30px; /* more top spacing for better header separation */
 }
 
 .converter-form {

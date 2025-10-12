@@ -1,15 +1,12 @@
 .amenities-main {
   display: flex;
-  text-align: center;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 89vh;
-  width: 600px;
+  height: 100vh;
+  width: 500px;
   padding: 0px;
   box-sizing: border-box;
-  background: #F3F2E9;
-  border-radius: 20px;
+  background: #f2f4f8;
   box-shadow: 0 16px 16px rgba(0, 0, 0, 1);
 }
 
@@ -52,11 +49,11 @@
 }
 
 .amenities-main button{
-  padding: 10px;
+  padding: 15px;
   margin-bottom: 10px;
   border: none;
-  border-radius: 20px;
-  background-color: #E24845;
+  border-radius: 100px;
+  background-color: #005fcc;
   color: white;
   font-size: 1.25rem;
   cursor: pointer;
@@ -111,3 +108,4 @@
   margin: 10px 0;
   font-style: italic;
 }
+

@@ -82,13 +82,17 @@ const Dashboard = () => {
   return (
     <div className='dashboard-main'>
 
-      <div className="header-container">
-        <div></div>
+    <div className="header-container">
+      <div></div> {/* Empty div to keep spacing on the left */}
+      
+      <div className="logo-container">
         <img src={logoImage} alt="Logo" className="logo-image"/>
-        <div className="profile-picture-wrapper" >
-        <img src={avatar.url} alt={avatar.name} className="profile-picture" onClick={handleImageClick} style={{ cursor: 'pointer' }} />
-        </div>
       </div>
+      
+      <div className="profile-picture-wrapper">
+        <img src={avatar.url} alt={avatar.name} className="profile-picture" onClick={handleImageClick}/>
+      </div>
+    </div>
     <div className="dashboard-grid">
       <div className='dashboard-box'>
         <button onClick={() => handleButtonClickCurrency()} className="icon-button">
