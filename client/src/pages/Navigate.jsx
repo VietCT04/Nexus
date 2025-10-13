@@ -151,7 +151,7 @@ setDestText(e.target.value);
         libraries={['places']}
       >
         <GoogleMap
-          mapContainerStyle={{ width: '500px', height: '300px'}}
+          mapContainerStyle={{ width: '450px', height: '300px', marginBottom:'10px'}}
           center={origin || defaultCenter}
           zoom={14}
         >
