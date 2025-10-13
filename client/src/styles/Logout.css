@@ -2,35 +2,36 @@ body, html {
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color: #F3F2E9;
+    background-color: #faf3e0;
     background-image: url('../assets/bgd.png');
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
     display: flex;
     align-items: center;
     justify-content: center;
-    perspective: 1000px;
-    background-attachment: fixed;
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .logout-main {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 89vh;
-    width: 450px;
-    padding: 50px;
+    width: 500px;                /* slightly wider for consistency */
+    min-height: 80vh;            /* responsive height */
+    padding: 40px 30px;
     box-sizing: border-box;
-    background: #F3F2E9;
+    background-color: #faf3e0;   /* light neutral background */
     border-radius: 20px;
-    box-shadow: 0 16px 16px rgba(0, 0, 0, 1);
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.15); /* softer shadow */
     transform-style: preserve-3d;
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .logout-main:hover {
-    transform: scale(1.05);
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
 .logout-right-container {
@@ -38,13 +39,43 @@ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 80vh;
-    width: 450px;
-    padding-left: 100px;
-    padding: 25px;
+    width: 100%;
+    padding: 30px 25px;
     text-align: center;
     border-radius: 15px;
-    box-shadow: 1px 0px 9px 0px rgba(0,0,0,0.15);
-    transform: rotateY(0deg) rotateX(0deg);
-    transition: background 0.5s ease, transform 0.5s ease-in-out;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;    /* white card inside main container */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logout-right-container h2 {
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1a1a2e;
+}
+
+.logout-right-container p {
+    margin-bottom: 20px;
+    font-size: 1rem;
+    color: #555;
+}
+
+.logout-right-container button {
+    width: 80%;
+    padding: 12px 0;
+    margin-top: 15px;
+    background-color: #1a1a2e;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.logout-right-container button:hover {
+    background-color: #000000;
+    transform: translateY(-2px);
 }
