@@ -1,8 +1,9 @@
+/* Base styles */
 body, html {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #F3F2E9;
+  background-color: #faf3e0;
   background-image: url('../assets/bgd.png'); /* Ensure this path is correct */
   background-size: cover;
   background-position: center;
@@ -11,21 +12,22 @@ body, html {
   align-items: center;
   justify-content: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
 }
 
 .page-container {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centers content vertically */
-  align-items: center; /* Centers content horizontally */
-  width: 600px;
-  height: 89vh; /* Ensure the container doesn't exceed the viewport height */
-  padding: 20px;
-  box-sizing: border-box;
-  background: #F3F2E9;
+  align-items: center;
+  width: 500px;
+  min-height: 80vh;
+  padding: 30px 25px;
+  background-color: #faf3e0; /* Softer warm background */
   border-radius: 20px;
-  box-shadow: 0 16px 16px rgba(0, 0, 0, 0.2);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  border: 1px solid #eaeaea;
+  box-sizing: border-box;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
   .logo{
@@ -38,12 +40,10 @@ body, html {
   /* The form container will act as the 'box' in the background */
   .form-container {
     height: 70vh;
-    background-color: #F3F2E9; /* A white background for the box */
+    background-color: #faf3e0; /* A white background for the box */
     padding: 40px;
     border-radius: 8px; /* Rounded corners are common in modern design */
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* A subtle shadow for depth */
     width: 500px;
-    border: 1px double black;
     display: block;
     margin-top: 10px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -65,32 +65,40 @@ body, html {
   .smaller{
     font-size: 20px;
   }
+
+  .registered-number-label{
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 20px;
+    color: #333333;
+  }
   /* Styles for the phone input field, using a class provided by 'react-phone-input-2' */
   .phone-input {
     width: 100%; /* Full width of the container */
+    margin-top: 10px;
     margin-bottom: 24px; /* Space after the phone input field */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   
   /* Button styling to match the Figma design */
-  .save-button {
-    background-color: #E24845; /* Assuming this is the button color you want */
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 4px;
-    font-size: 16px;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    width: 100%; /* Full width button is common in modern design */
-    height: 100%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
+/* Save button */
+.save-button {
+  background-color: #cc0000;
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 10px;
+}
   
   .save-button:hover {
-    background-color: red; /* A slightly darker shade on hover */
+    background-color: #a00000; /* A slightly darker shade on hover */
   }
 
 .page-container .form-control{

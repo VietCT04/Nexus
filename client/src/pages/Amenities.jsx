@@ -220,18 +220,23 @@ const NearbyAmenities = () => {
       </div>
   
       <div className="sticky-controls">
-        {['restaurant', 'subway_station', 'bus_station', 'grocery_or_supermarket', "hospital"].map((type) => (
-          <label key={type}>
-            <input
-              type="radio"
-              name="amenityType"
-              value={type}
-              onChange={handleAmenityTypeChange}
-            />{' '}
-            {type === 'subway_station' ? 'MRT Station' : type === 'restaurant' ? nation+' Eateries' : type === 'bus_station' ? 'Bus Stop' : type === 'grocery_or_supermarket' ? nation+' Shops' : type.charAt(0).toUpperCase() + type.slice(1)}
-          </label>
-        ))}
+        <label>
+          <input type="radio" name="amenityType" value="subway_station" onChange={handleAmenityTypeChange}/> MRT Station
+        </label>
+        <label>
+          <input type="radio" name="amenityType" value="bus_station" onChange={handleAmenityTypeChange}/> Bus Stop
+        </label>
+        <label>
+          <input type="radio" name="amenityType" value="hospital" onChange={handleAmenityTypeChange}/> Hospital
+        </label>
+        <label>
+          <input type="radio" name="amenityType" value="restaurant" onChange={handleAmenityTypeChange}/> {nation} Eateries
+        </label>
+        <label>
+          <input type="radio" name="amenityType" value="grocery_or_supermarket" onChange={handleAmenityTypeChange}/> {nation} Shops
+        </label>
       </div>
+
       <button onClick={fetchAmenities}>Find Nearest Amenities</button>
       <div id="map" style={{ height: '50%', width: '80%', maxHeight: '300px'}}></div>
   

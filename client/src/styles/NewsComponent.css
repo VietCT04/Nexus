@@ -7,7 +7,7 @@
   width: 500px;
   height: 100vh;
   box-sizing: border-box;
-  background: #f2f4f8;
+  background: #faf3e0;
   box-shadow: 0 16px 16px rgba(0, 0, 0, 1);
   overflow: hidden; /* Hide overflow content */
 }
@@ -82,7 +82,7 @@
   margin-bottom: 20px;
   border-radius: 5px;
   overflow: hidden;
-  text-align: center;
+  text-align: left;
 }
 
 .top-news:hover {
@@ -99,14 +99,15 @@
 
 .top-news h2 {
   margin: 15px 20px 10px;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 700;
+  text-align: left;
   color: #222;
 }
 
 .top-news h1, .top-news p {
   margin: 0 20px 20px;
-  font-size: 18px;
+  font-size: 14px;
   color: #555;
 }
 
@@ -140,7 +141,7 @@
 }
 
 .news-card div {
-  padding: 15px;
+  padding: 10px;
 }
 
 .news-card h2 {

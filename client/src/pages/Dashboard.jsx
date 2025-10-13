@@ -82,9 +82,7 @@ const Dashboard = () => {
   return (
     <div className='dashboard-main'>
 
-    <div className="header-container">
-      <div></div> {/* Empty div to keep spacing on the left */}
-      
+    <div className="header-container">      
       <div className="logo-container">
         <img src={logoImage} alt="Logo" className="logo-image"/>
       </div>

@@ -6,7 +6,7 @@
   width: 500px;
   padding: 0px;
   box-sizing: border-box;
-  background: #f2f4f8;
+  background: #faf3e0;
   box-shadow: 0 16px 16px rgba(0, 0, 0, 1);
 }
 
@@ -37,25 +37,31 @@
 }
 
 .sticky-controls {
-  display: flex;
-  flex-direction: row;
-  top: 0;
-  padding: 10px;
-  z-index: 1000; /* Ensure it stays on top of other content */
+  display: grid;
+  grid-template-columns: repeat(3, auto); /* 3 columns for the first row */
+  gap: 12px 20px; /* spacing between rows and columns */
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .sticky-controls > label{
   padding-left: 10px;
 }
 
+/* Make sure the second row (Indian Eateries + Shops) aligns nicely */
+.sticky-controls label:nth-child(n+4) {
+  grid-column: span 1;
+  justify-self: center;
+}
+
 .amenities-main button{
-  padding: 15px;
   margin-bottom: 10px;
   border: none;
   border-radius: 100px;
-  background-color: #005fcc;
+  background-color: #1a1a2e;
   color: white;
-  font-size: 1.25rem;
+  font-size: 1rem;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
 }

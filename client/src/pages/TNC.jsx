@@ -22,7 +22,7 @@ const TandC = () => {
       </div> 
       <div className="TandC-content">
         <h1>Privacy Policy for CROSS BORDER</h1>
-        <p className="TandC-last-updated">Last Updated: March 03, 2024</p>
+        <p className="TandC-last-updated">Last Updated: October 13, 2025</p>
         <section>
           <h2>Introduction</h2>
           <p>This Privacy Policy outlines the collection, use, and disclosure of personal information by CROSS BORDER when you use our services. By accessing or using our service, you consent to the processing of your information as described in this policy.</p>

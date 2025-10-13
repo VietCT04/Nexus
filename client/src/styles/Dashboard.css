@@ -5,8 +5,8 @@
   padding: 20px;
   width: 500px;
   min-height: 100vh;
-  background-color: #f2f4f8;
-  margin-top: 15vh; /* move dashboard a bit lower from top */
+  background-color: #faf3e0;
+  border-radius: 15px;
 }
 
 .header-container {
@@ -27,12 +27,13 @@
 
 .logo-image {
   height: 70px;
+  padding: 5px;
   object-fit: contain;
 }
 
 .profile-picture-wrapper {
   position: absolute;
-  right: 0px; /* top-right corner */
+  right: 30px; /* top-right corner */
   cursor: pointer;
   z-index: 2;
 }
@@ -48,9 +49,10 @@
   grid-template-columns: repeat(2, 1fr); /* 2 columns layout */
   row-gap: 25px;    /* vertical spacing between rows */
   column-gap: 20px; /* horizontal spacing between buttons */
-  padding: 0 10px;
+  padding: 0 20px;
   justify-items: center; /* center buttons in each column */
   width: 100%;
+  margin-top: 30px;
 }
 
 .dashboard-box {
@@ -69,7 +71,7 @@
   justify-content: center;
   cursor: pointer;
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  background-color: #7394ff;
+  background-color: #f6c90e;
   transition: all 0.2s ease;
 }
 
@@ -86,5 +88,5 @@
 }
 
 .dashboard-box .icon-button:hover {
-  background-color: #740909;
+  background-color: #f7b00b;
 }

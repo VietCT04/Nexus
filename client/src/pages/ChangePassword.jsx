@@ -27,7 +27,7 @@ const ChangePassword = () => {
   const token = localStorage.getItem('auth');
   const navigate = useNavigate();
 
-    /**
+  /**
    * Attempts to verify the current password with the backend.
    * Displays a toast notification based on the outcome.
    * @param {string} currentPassword - The current password input by the user.
@@ -51,7 +51,7 @@ const ChangePassword = () => {
     }
   };
 
-    /**
+  /**
    * Handles the submission of the password change form.
    * Validates form data, communicates with the backend to update the password,
    * and navigates the user on success.
@@ -100,7 +100,6 @@ const ChangePassword = () => {
     }
   };
 
-
   /**
    * Handles the form event to verify the current password.
    * @param {React.FormEvent<HTMLFormElement>} e - The event object.
@@ -111,7 +110,7 @@ const ChangePassword = () => {
     verifyCurrentPassword(currentPassword);
   };
 
-    /**
+  /**
    * Updates the `newPassword` state based on the user's input in the New Password field.
    * @param {React.ChangeEvent<HTMLInputElement>} e - The event object for the input change.
    */
@@ -119,43 +118,40 @@ const ChangePassword = () => {
     setNewPassword(e.target.value);
   };
 
-
   const handleBackClick = () => {
     window.history.back();
   };
 
   return (
     <div className="change-password-main">
-      <div className="change-password-right change-password-right-container-bg">
-        <div className="change-password-right-container">
-        <div className="header-container">
-          <img src={backImage} alt="back" className="back-image" onClick={handleBackClick}/>
-          <img src={Logo} alt="Logo" className="logo-image"/>
-          <div></div>
-        </div>
-          <div className="change-password-center">
-            <h2>Change Password</h2>
-            {!isCurrentPasswordVerified ? (
-              <form onSubmit={handleVerifyCurrentPassword}>
-                <p>Please verify your current password</p>
-                <div className="pass-input-div">
-                  <input
-                    type={showCurrentPassword ? "text" : "password"}
-                    placeholder="Current Password"
-                    name="currentPassword"
-                  />
-                  {showCurrentPassword ? (
-                    <FaEyeSlash onClick={() => setShowCurrentPassword(!showCurrentPassword)} />
-                  ) : (
-                    <FaEye onClick={() => setShowCurrentPassword(!showCurrentPassword)} />
-                  )}
-                </div>
-                <button type="submit">Verify Current Password</button>
-              </form>
-            ) : (
-              <form onSubmit={handlePasswordChangeSubmit}>
-                <p>Please enter your new password</p>
-                <div className="pass-input-div">
+      <div className="header-container">
+        <img src={backImage} alt="back" className="back-image" onClick={handleBackClick}/>
+        <img src={Logo} alt="Logo" className="logo-image"/>
+      </div>
+      
+      <div className="change-password-content">
+        <h2>Change Password</h2>
+        {!isCurrentPasswordVerified ? (
+          <form onSubmit={handleVerifyCurrentPassword}>
+            <p>Please verify your current password</p>
+            <div className="pass-input-div">
+              <input
+                type={showCurrentPassword ? "text" : "password"}
+                placeholder="Current Password"
+                name="currentPassword"
+              />
+              {showCurrentPassword ? (
+                <FaEyeSlash onClick={() => setShowCurrentPassword(!showCurrentPassword)} />
+              ) : (
+                <FaEye onClick={() => setShowCurrentPassword(!showCurrentPassword)} />
+              )}
+            </div>
+            <button type="submit">Verify Current Password</button>
+          </form>
+        ) : (
+          <form onSubmit={handlePasswordChangeSubmit}>
+            <p>Please enter your new password</p>
+            <div className="pass-input-div">
                   <input
                     type={showNewPassword ? "text" : "password"}
                     placeholder="New Password"
@@ -171,23 +167,21 @@ const ChangePassword = () => {
                   )}
                   <PasswordStrengthMeterComponent password={newPassword} />
                 </div>
-                <div className="pass-input-div">
-                  <input
-                    type={showConfirmPassword ? "text" : "password"}
-                    placeholder="Confirm New Password"
-                    name="confirmPassword"
-                  />
-                  {showConfirmPassword ? (
-                    <FaEyeSlash onClick={() => setShowConfirmPassword(!showConfirmPassword)} />
-                  ) : (
-                    <FaEye onClick={() => setShowConfirmPassword(!showConfirmPassword)} />
-                  )}
-                </div>
-                <button type="submit">Change Password</button>
-              </form>
-            )}
-          </div>
-        </div>
+            <div className="pass-input-div">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="Confirm New Password"
+                name="confirmPassword"
+              />
+              {showConfirmPassword ? (
+                <FaEyeSlash onClick={() => setShowConfirmPassword(!showConfirmPassword)} />
+              ) : (
+                <FaEye onClick={() => setShowConfirmPassword(!showConfirmPassword)} />
+              )}
+            </div>
+            <button type="submit">Change Password</button>
+          </form>
+        )}
       </div>
     </div>
   );

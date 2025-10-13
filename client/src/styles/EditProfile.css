@@ -1,35 +1,41 @@
+/* Base styles */
 body, html {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #E24845;
+  background-color: #E24845; /* Main background */
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Main profile container */
 .profile-content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  height: 89vh;
   width: 600px;
-  padding: 20px;
-  box-sizing: border-box;
+  height: 100vh;
+  padding: 30px 25px;
   background: #F3F2E9;
-  border-radius: 20px;
-  box-shadow: 0 16px 16px rgba(0, 0, 0, 0.2);
-  margin: auto;
-  border: 1px solid #eaeaea;
+  border-radius: 25px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  border: 2px solid #e0d4c5;
+  box-sizing: border-box;
   position: relative;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 .profile-center {
   max-width: 80%;
   overflow-y: auto;
+  width: 100%;
+  padding-right: 15px; /* Space between content and scrollbar */
+  box-sizing: content-box; /* ensures padding doesn’t shrink content */
 }
+
 
 .upload-container, .upload-container.drag-over {
   display: flex;
@@ -39,13 +45,22 @@ body, html {
   text-align: center;
   height: 200px;
   width: 100%;
-  background-color: #19857b;
-  border-radius: 3px;
-  padding: 50px 0;
+  padding: 40px 20px;
+  border-radius: 15px; /* more rounded corners */
+  background: linear-gradient(135deg, #19857b, #20a39e); /* subtle gradient */
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* soft shadow */
+  cursor: pointer;
+  border: 2px dashed rgba(255, 255, 255, 0.4); /* dashed border for upload feel */
 }
 
 .upload-container.drag-over {
-  background-color: #abcdef;
+  background: linear-gradient(135deg, #20a39e, #30c1b0); /* slightly brighter when dragging */
+  border-color: rgba(255, 255, 255, 0.8);
+  transform: scale(1.02);
 }
 
 .container-grid {
@@ -90,7 +105,7 @@ body, html {
 }
 
 .profile-content button {
-  background-color: #E24845;
+  background-color: #cc0000;
   color: white;
   border: none;
   cursor: pointer;
@@ -98,7 +113,7 @@ body, html {
 }
 
 .profile-content button:hover {
-  background-color: red;
+  background-color: #a00000;
 }
 
 .profile-content .profile-pic-container, 
@@ -143,8 +158,8 @@ body, html {
 
 .overlay-content {
   background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
+  padding: 5px;
+  border-radius: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
