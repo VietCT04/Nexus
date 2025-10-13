@@ -8,6 +8,7 @@
   box-sizing: border-box;
   background: #faf3e0;
   box-shadow: 0 16px 16px rgba(0, 0, 0, 1);
+	margin-bottom: 10px;
 }
 
 .navigate-main .input-container, .find-route-container {

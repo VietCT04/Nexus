@@ -142,7 +142,7 @@
 }
 
 .convert-button {
-  background-color: #0077ff;
+  background-color: #1a1a2e;
   color: white;
   font-weight: 600;
   border: none;
@@ -152,9 +152,6 @@
   transition: background 0.2s;
 }
 
-.convert-button:hover {
-  background-color: #005fcc;
-}
 
 .rate-text {
   margin-top: 10px;
