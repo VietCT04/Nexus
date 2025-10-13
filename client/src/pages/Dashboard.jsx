@@ -9,6 +9,7 @@ import NavigationIcon from '../assets/navigate.svg';
 import AmenitiesIcon from '../assets/amenities.svg';
 import NewsIcon from '../assets/news.svg';
 import BotIcon from '../assets/bot.svg';
+import LinksIcon from '../assets/links.svg';
 import SettingsIcon from '../assets/settings.svg';
 import logoImage from '../assets/landscapelogo.png'; 
 import defaultAvatarUrl from "../assets/defaultpfp.png";
@@ -71,6 +72,9 @@ const Dashboard = () => {
    const handleImageClick= () => {
     navigate("/edit");
    }; 
+   const handleButtonClickLinks = () => {
+   navigate("/quicklinks");
+  };
 
     // Redirect to login page if not logged in
   useEffect(() => {
@@ -121,6 +125,12 @@ const Dashboard = () => {
           <img src={BotIcon} alt="BotIcon" />
         </button>
         <span>ChatBot</span>
+      </div>
+      <div className='dashboard-box'>
+        <button onClick={() => handleButtonClickLinks()} className="icon-button">
+          <img src={LinksIcon} alt="LinksIcon" />
+        </button>
+        <span>Quick Links</span>
       </div>
       <div className='dashboard-box'>
         <button onClick={() => handleButtonClickSettings()} className="icon-button">
