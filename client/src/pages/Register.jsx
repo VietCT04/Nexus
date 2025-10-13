@@ -86,27 +86,22 @@ const Register = () => {
                   name="password"
                   value={password}
                   onChange={handlePasswordChange}
-                  
                 />
+                <span className="eye-icon" onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
                 <PasswordStrengthMeterComponent password={password} />
-                {showPassword ? (
-                  <FaEyeSlash onClick={() => setShowPassword(!showPassword)} />
-                ) : (
-                  <FaEye onClick={() => setShowPassword(!showPassword)} />
-                )}
               </div>
+
               <div className="pass-input-div">
                 <input
                   type={showCPassword ? "text" : "password"}
                   placeholder="Confirm Password"
                   name="confirmPassword"
-                  
                 />
-                {showCPassword ? (
-                  <FaEyeSlash onClick={() => setShowCPassword(!showCPassword)} />
-                ) : (
-                  <FaEye onClick={() => setShowCPassword(!showCPassword)} />
-                )}
+                <span className="eye-icon" onClick={() => setShowCPassword(!showCPassword)}>
+                  {showCPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
               </div>
               <div className="register-center-buttons">
                 <button type="submit">Sign Up</button>

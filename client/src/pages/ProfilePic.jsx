@@ -102,11 +102,11 @@ function ProfilePic() {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      height: '89vh',
-      width: '450px',
+      height: '100vh',
+      width: '500px',
       padding: '50px',
       boxSizing: 'border-box',
-      background: '#F3F2E9',
+      background: '#faf3e0',
       borderRadius: '20px',
       boxShadow: '0 16px 16px rgba(0, 0, 0, 0.1)', 
       transformStyle: 'preserve-3d',
@@ -117,8 +117,8 @@ function ProfilePic() {
     },
   
     profilepicRightContainer: { 
-      height: '80vh',
-      width: '400px',
+      height: '85vh',
+      width: '500px',
       paddingLeft: '25px', 
       paddingTop: '25px', 
       paddingBottom: '25px', 
@@ -148,12 +148,12 @@ function ProfilePic() {
       alignItems: 'center',
       textAlign: 'center',   
       marginTop: '75px', 
-      backgroundColor: '#E24845', 
+      backgroundColor: '#cc0000', 
       borderRadius: '3px',
       padding: '50px 0',
       color: 'white',
       ...(isDragOver && {
-        backgroundColor: '#E24845', 
+        backgroundColor: '#a00000', 
       }),
     },
 
@@ -199,7 +199,7 @@ function ProfilePic() {
           <h3>or drag and drop them here</h3>
         </section>
 
-          <button onClick={handleFinish} style={{ marginTop: '50px', width: '100%'}}>Finish</button> 
+          <button onClick={handleFinish} style={{ marginTop: '30px', backgroundColor: '#1a1a2e',color: '#ffffff', height: '30px', width: '80%', borderRadius: '15px' }}>Finish</button> 
         </section>
 
         

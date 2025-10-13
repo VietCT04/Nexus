@@ -88,6 +88,7 @@
   cursor: pointer;
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
   background-color: #f6c90e;
+  border-width: 0px;
   transition: all 0.2s ease;
 }
 

@@ -1,135 +1,186 @@
-
+/* === Global Reset === */
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
+html, body {
+  height: 100%;
+  background-color: #F3F2E9;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* === Main Container === */
 .register-main {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 89vh;
-  max-width: 450px;
-  padding: 50px;
-  box-sizing: border-box;
+  min-height: 100vh;
+  width: 100%;
   background: #F3F2E9;
-  border-radius: 20px;
-  box-shadow: 0 16px 16px rgba(0, 0, 0, 1);
-  transform-style: preserve-3d;
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.4s ease-in-out;
 }
 
-.register-main:hover {
-  transform: scale(1.05);
-}
-
+/* === Card Container === */
 .register-right-container {
-  height: 80vh;
-  width: 400px;
-  padding-left: 100px;
-  padding: 25px;
+  width: 420px;
+  background: #ffffff;
+  padding: 45px 40px;
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
   text-align: center;
-  border-radius: 15px;
-  box-shadow: 1px 0px 9px 0px rgba(0,0,0,0.15);
-  transform: rotateY(0deg) rotateX(0deg);
-  transition: background 0.5s ease, transform 0.5s ease-in-out;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
 }
 
-/* Logo styles */
+.register-right-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* === Logo === */
 .register-logo img {
-  width: 250px; /* Adjusted size for better visual appeal */
-  margin-bottom: 2rem;
+  width: 160px;
+  margin-bottom: 1.5rem;
+  animation: fadeInDown 0.6s ease-out;
 }
 
-/* Headings and text styles */
+/* === Headings === */
 .register-center h2 {
-  color: #333;
-  font-size: 2.25rem;
-  margin-bottom: 1rem;
+  color: #222;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.3px;
 }
 
 .register-center p {
-  color: #666;
+  color: #555;
+  font-size: 0.95rem;
   margin-bottom: 2rem;
 }
 
-/* Input fields styling */
+/* === Inputs === */
 .register-main input[type='text'],
 .register-main input[type='password'] {
-  border: 2px solid #ccc;
-  border-radius: 20px;
+  border: 1.5px solid #ccc;
+  border-radius: 10px;
   padding: 12px 15px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   width: 100%;
-  transition: border-color 0.3s ease-in-out;
+  font-size: 1rem;
+  background-color: #fafafa;
+  transition: all 0.25s ease;
 }
 
 .register-main input[type='text']:focus,
 .register-main input[type='password']:focus {
   border-color: #E24845;
+  background-color: #fff;
   outline: none;
 }
 
-/* Toggle password visibility icons */
-.register-main .pass-input-div svg {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  font-size: 1.5rem;
-  color: #E24845;
-  cursor: pointer;
+/* === Password Input with Eye Icon === */
+.pass-input-div {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
-/* Button styles with transitions */
+.pass-input-div input {
+  width: 100%;
+  padding: 12px 40px 12px 12px; /* space for icon */
+  border-radius: 8px;
+  border: none; /* removed border */
+  background-color: white;
+  box-sizing: border-box;
+  font-size: 1rem;
+  outline: none; /* remove focus outline */
+}
+
+.pass-input-div input:focus {
+  background-color: #fff9f0; /* subtle feedback when focused */
+}
+
+/* Eye icon inside the input */
+.pass-input-div .eye-icon {
+  position: absolute;
+  left: 265px;
+  top: 10px;
+  cursor: pointer;
+  color: #666;
+  background-color: white;
+  font-size: 1.1rem;
+  width: 25px;
+  height: 25px;
+  transition: color 0.2s ease;
+  padding: 2px;
+}
+
+.pass-input-div .eye-icon:hover {
+  color: #333;
+}
+
+/* === Buttons === */
 .register-center-buttons button {
   width: 100%;
-  padding: 1rem 0;
+  padding: 0.9rem 0;
   margin-bottom: 1rem;
   border: none;
-  border-radius: 30px;
+  border-radius: 10px;
   background-color: #E24845;
-  color: white;
+  color: #fff;
   font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease;
 }
 
 .register-center-buttons button:hover {
   background-color: #C13535;
-  transform: scale(1.05);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(226, 72, 69, 0.3);
 }
 
-/* Link styles */
-.register-bottom-p a {
+/* === Bottom Text === */
+.login-bottom-p {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+.login-bottom-p a {
   color: #E24845;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 600;
   transition: color 0.3s ease-in-out;
 }
 
-.register-bottom-p a:hover {
-  text-decoration: underline;
+.login-bottom-p a:hover {
   color: #C13535;
+  text-decoration: underline;
 }
 
-/* Advanced animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
+/* === Animations === */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Apply the animation to all elements inside the container */
-.register-right-container * {
-  animation: fadeIn 0.5s ease-out forwards;
-}
-
-/* Responsive adjustments */
-@media (min-width: 768px) {
+/* === Responsive === */
+@media (max-width: 480px) {
   .register-right-container {
-    padding: 3rem;
-    max-width: 450px;
+    width: 90%;
+    padding: 35px 25px;
   }
 
   .register-center h2 {
-    font-size: 2.5rem;
+    font-size: 1.6rem;
+  }
+
+  .register-center p {
+    font-size: 0.9rem;
   }
 }
