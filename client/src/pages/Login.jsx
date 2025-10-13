@@ -70,22 +70,10 @@ const Login = () => {
                   placeholder="Password"
                   name="password"
                 />
-                          
-                {showPassword ? (
-                  <FaEyeSlash
-                    onClick={() => {
-                      setShowPassword(!showPassword);
-                    }}
-                  />
-                ) : (
-                  <FaEye
-                    onClick={() => {
-                      setShowPassword(!showPassword);
-                    }}
-                  />
-                )}
+                <span onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </span>
               </div>
-
               <div className="login-center-options">
               <p><Link to={{
                 pathname: "/phonenumotp",

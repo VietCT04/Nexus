@@ -2,108 +2,131 @@ body, html {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #F3F2E9;
+  background-color: #faf3e0;
   background-image: url('../assets/bgd.png');
   background-size: cover;
   background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* perspective: 1000px; */
-  background-attachment: fixed;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .login-main {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 89vh;
-  width: 450px;
-  padding: 50px 25px;
+  height: 100vh;
+  width: 500px; /* slightly tighter so it looks neat */
+  padding: 30px 25px;
   box-sizing: border-box;
-  background: #F3F2E9;
+  background: #faf3e0;
   border-radius: 20px;
-  box-shadow: 0 16px 16px rgba(0, 0, 0, 1);
-  transform-style: preserve-3d;
-  transition: transform 0.5s ease-in-out;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
 }
 
 .login-main:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3);
 }
 
+/* Inner content wrapper */
 .login-right-container {
-  height: 80vh;
-  width: 400px;
-  padding-left: 100px;
-  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
   text-align: center;
-  border-radius: 15px;
-  box-shadow: 1px 0px 9px 0px rgba(0,0,0,0.15);
-  transform: rotateY(0deg) rotateX(0deg);
-  transition: background 0.5s ease, transform 0.5s ease-in-out;
-}
-
-.login-center h2
-{
-  padding-top:25px;
-  font-size: 40px;
-}
-
-.login-center p
-{
-  padding-top: 10px;
-  padding-bottom:15px;
-  font-size: 18px;
 }
 
 .login-logo img {
-  width: 200px;
-  margin-top:10px;
- 
+  width: 140px;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
-.login-right-container:hover {
-  background: #F3F2E9;
-  transform: translateZ(20px);
+.login-center h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #1a1a2e;
 }
 
+.login-center p {
+  font-size: 15px;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+/* Input styling */
 input[type="username"],
 input[type="password"],
 input[type="text"] {
-  border: 2px solid white;
-  border-radius: 20px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
   padding: 12px 15px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   width: 100%;
-  transition: border-color 0.3s ease-in-out;
+  font-size: 15px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 input[type="username"]:focus,
-input[type="password"]:focus {
-  border-color: #E24845;
+input[type="password"]:focus,
+input[type="text"]:focus {
+  border-color: #1a1a2e;
   outline: none;
+  box-shadow: 0 0 8px rgba(26, 26, 46, 0.3);
 }
 
-.login-center-buttons button {
-  background-color: #E24845;
-  color: white;
-  padding: 15px 0;
-  margin-top: 20px;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 18px;
+/* Password input with eye icon */
+.login-main .pass-input-div {
+  position: relative;
   width: 100%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+}
+
+.login-main .pass-input-div input {
+  width: 100%;
+  padding-right: 45px; /* space for the eye icon */
+  box-sizing: border-box;
 }
 
 .login-main .pass-input-div svg {
   position: absolute;
-  right: 35px;
-  margin-top: 10px;
-  font-size: 1.5rem;
-  color: #E24845;
+  right: 15px;
+  top: 50%; /* center vertically */
+  transform: translateY(-50%);
+  font-size: 1.3rem;
+  color: #1a1a2e;
   cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.login-main .pass-input-div svg:hover {
+  color: #E24845;
+}
+
+/* Button styling */
+.login-center-buttons button {
+  background-color: #1a1a2e;
+  color: white;
+  padding: 14px 0;
+  margin-top: 20px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 17px;
+  width: 100%;
+  font-weight: 600;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+
+.login-center-buttons button:hover {
+  background-color: #E24845;
+  transform: translateY(-2px);
 }

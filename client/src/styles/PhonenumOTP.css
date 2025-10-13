@@ -2,7 +2,7 @@ body, html {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #F3F2E9; /* Subtle background color */
+  background-color: #faf3e0; /* Subtle background color */
   background-image: url('../assets/bgd.png'); /* Ensure this path is correct in your project */
   background-size: cover;
   background-position: center;
@@ -17,13 +17,12 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 89vh;
+  height: 100vh;
   max-width: 450px;
   padding: 50px;
   box-sizing: border-box;
-  background: #F3F2E9;
+  background: #faf3e0;
   border-radius: 20px;
-  box-shadow: 0 16px 16px rgba(0, 0, 0, 1);
   transform-style: preserve-3d;
   transition: transform 0.5s ease-in-out;
 }
@@ -44,13 +43,13 @@ body, html {
   padding: 25px;
   text-align: center;
   border-radius: 15px;
-  box-shadow: 1px 0px 9px 0px rgba(0,0,0,0.15);
   transform: rotateY(0deg) rotateX(0deg);
   transition: background 0.5s ease, transform 0.5s ease-in-out;
 }
 
 .OTP-logo{
-  max-width: 100%;
+  max-width: 100%;  
+  margin-bottom: 2rem;
 }
 
 .OTP-right-container .title{
@@ -111,16 +110,16 @@ body, html {
 }
 
 .input:focus {
-  border-color: #E24845;
+  border-color: #1a1a2e;
   outline: none;
 }
 
 /* Button styling for actions */
 #OTP-button {
-  background-color: #E24845; /* Theme color */
+  background-color: #1a1a2e; /* Theme color */
   color: white;
   padding: 1rem 2rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
   border: none;
   border-radius: 20px;
   cursor: pointer;
@@ -130,7 +129,7 @@ body, html {
 }
 
 #OTP-button:hover {
-  background-color: #cc3c3b; /* Slightly darker shade for interactive feedback */
+  background-color: #1a1a2e; /* Slightly darker shade for interactive feedback */
 }
 
 /* OTP specific styles */
@@ -150,7 +149,7 @@ body, html {
 }
 
 .otp-input:focus {
-  border-color: #E24845;
+  border-color: #1a1a2e;
 }
 
 /* Timer and resend link styles */
@@ -162,7 +161,7 @@ body, html {
 }
 
 .resend-link {
-  color: #E24845;
+  color: #1a1a2e;
   cursor: pointer;
   text-decoration: underline;
 }
