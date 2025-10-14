@@ -1,4 +1,5 @@
 //Dashboard.jsx
+// Modern glassmorphism dashboard with feature grid - Redesigned by aish-1509
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
