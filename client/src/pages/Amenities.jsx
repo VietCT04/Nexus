@@ -1,16 +1,20 @@
 //Amenities.jsx
-import React, { useState, useEffect,useCallback  } from 'react';
-import "slick-carousel/slick/slick.css"; 
-import "slick-carousel/slick/slick-theme.css";
+import React, { useState, useEffect, useCallback } from 'react';
 import { useUser } from '../contexts/UserContext';
-import "../styles/Amenities.css";
 import { toast } from 'react-toastify';
+import { 
+  HiArrowLeft, 
+  HiMapPin, 
+  HiStar,
+  HiClock,
+  HiPhone,
+  HiGlobeAlt
+} from 'react-icons/hi2';
 import logoImage from '../assets/landscapelogo.png'; 
-import backImage from '../assets/back.png'; 
+import bgdImage from '../assets/bgd.png';
 import defaultAm from "../assets/defaultAmenities.png";
-import {GOOGLE_MAPS_AK} from './API_KEYS.jsx'
+import { GOOGLE_MAPS_AK } from './API_KEYS.jsx';
 
-// initializing Google Maps script
 const loadGoogleMapsScript = (callback) => {
   const existingScript = document.getElementById('googleMapsScript');
   if (!existingScript) {
@@ -28,84 +32,62 @@ const loadGoogleMapsScript = (callback) => {
   }
 };
 
-/**
- * Displays amenities near the user's current location, allowing them to choose from different types of amenities.
- * 
- * This component first retrieves the user's nationality from the context to tailor the amenities search (e.g., Indian Eateries)
- * based on the user's preferences. It then initializes a Google Map centered on the user's current location, fetched via
- * the Geolocation API. Users can select an amenity type to search for nearby places like restaurants, MRT stations, etc.
- * The search results are displayed both on the map with markers and below the map using a slider component, with details
- * about each amenity such as name, rating, and reviews.
- * 
- * Uses Google Maps JavaScript API for map and places services, `react-slick` for a responsive and accessible slider,
- * and `react-toastify` for notification messages.
- */
 const NearbyAmenities = () => {
-    const { userProfile } = useUser();
-    const [location, setLocation] = useState({ lat: null, lng: null });
-    const [amenityType, setAmenityType] = useState('');
-    const [amenities, setAmenities] = useState([]);
-    const [map, setMap] = useState(null);
-    const [nation,setNation]= useState("");
-    const [markers, setMarkers] = useState([]);
-  
-     // Effect hook to update component based on user profile context
-    useEffect(() => {
-      if (userProfile && userProfile.nationality) {
-          setNation(userProfile.nationality);
-      }
+  const { userProfile } = useUser();
+  const [location, setLocation] = useState({ lat: null, lng: null });
+  const [amenityType, setAmenityType] = useState('');
+  const [amenities, setAmenities] = useState([]);
+  const [map, setMap] = useState(null);
+  const [nation, setNation] = useState("");
+  const [markers, setMarkers] = useState([]);
+
+  useEffect(() => {
+    if (userProfile && userProfile.nationality) {
+      setNation(userProfile.nationality);
+    }
   }, [userProfile]);
 
-    /**
-   * Initializes the Google Map centered on the user's current location.
-   * It creates a new map instance and sets the map state, enabling further
-   * map-related operations such as placing markers.
-   */
   const initializeMap = useCallback(() => {
-      if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition((position) => {
-              const currentLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
-              setLocation(currentLocation);
-              const map = new window.google.maps.Map(document.getElementById('map'), {
-                  center: currentLocation,
-                  zoom: 15,
-              });
-              setMap(map);
-          }, (error) => {
-              console.error("Geolocation error:", error);
-              toast.error('Geolocation error. Please enable location services.');
-          });
-      } else {
-          toast.error('Geolocation is not supported by this browser.');
-      }
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const currentLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
+        setLocation(currentLocation);
+        const map = new window.google.maps.Map(document.getElementById('map'), {
+          center: currentLocation,
+          zoom: 15,
+          styles: [
+            {
+              featureType: "all",
+              elementType: "geometry",
+              stylers: [{ saturation: -20 }]
+            }
+          ]
+        });
+        setMap(map);
+      }, (error) => {
+        console.error("Geolocation error:", error);
+        toast.error('Geolocation error. Please enable location services.');
+      });
+    } else {
+      toast.error('Geolocation is not supported by this browser.');
+    }
   }, []);
 
   useEffect(() => {
-      loadGoogleMapsScript(initializeMap);
+    loadGoogleMapsScript(initializeMap);
   }, [initializeMap]);
-  
-        /**
-   * Clears all existing markers from the map.
-   * This function is typically called before displaying new search results to ensure
-   * the map only shows relevant markers for the current search.
-   */
-    const clearMarkers = () => {
-      markers.forEach(marker => marker.setMap(null)); 
-      setMarkers([]); 
-    };
 
-    /**
- * Fetches nearby amenities based on the selected amenity type and user's location.
- * Utilizes the Google Places API to find amenities and updates the map and amenities
- * state with the search results. It also clears any existing markers before displaying
- * new ones.
- */
+  const clearMarkers = () => {
+    markers.forEach(marker => marker.setMap(null)); 
+    setMarkers([]); 
+  };
+
   const fetchAmenities = () => {
     if (!map) return;
 
     if (!amenityType) {
-        toast.info("Please select an amenity type before searching.");
-        return;
+      toast.info("Please select an amenity type before searching.");
+      return;
     }
 
     clearMarkers(); 
@@ -127,25 +109,23 @@ const NearbyAmenities = () => {
           const marker = new window.google.maps.Marker({
             position: place.geometry.location,
             map: map,
-            title: place.name, // Set the marker's title to the place name
+            title: place.name,
           });
          
-        const infoWindow = new window.google.maps.InfoWindow({
+          const infoWindow = new window.google.maps.InfoWindow({
             content: `
-              <div>
-                <h3>${place.name}</h3>
-                <p>${place.vicinity}</p>
-                <a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(place.vicinity)}" target="_blank">View on Google Maps</a>
+              <div style="padding: 8px;">
+                <h3 style="margin: 0 0 4px 0; font-size: 16px; font-weight: 600;">${place.name}</h3>
+                <p style="margin: 0 0 8px 0; color: #666; font-size: 14px;">${place.vicinity}</p>
+                <a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(place.vicinity)}" target="_blank" style="color: #f97316; text-decoration: none; font-weight: 500;">View on Google Maps →</a>
               </div>
             `
           });
   
           marker.addListener('click', () => {
-          
             if (window.currentInfoWindow) {
               window.currentInfoWindow.close();
             }
-          
             window.currentInfoWindow = infoWindow;
             infoWindow.open({
               anchor: marker,
@@ -163,7 +143,7 @@ const NearbyAmenities = () => {
             service.getDetails({placeId: place.place_id}, (detail, status) => {
               if (status === window.google.maps.places.PlacesServiceStatus.OK) {
                 const photoUrl = detail.photos && detail.photos.length > 0
-                  ? detail.photos[0].getUrl({'maxWidth': 100, 'maxHeight': 100})
+                  ? detail.photos[0].getUrl({'maxWidth': 300, 'maxHeight': 200})
                   : defaultAm;
                 const openingHours = detail.opening_hours ? detail.opening_hours.weekday_text : ['Opening hours not available'];
                 resolve({...detail, photoUrl, openingHours});
@@ -178,100 +158,324 @@ const NearbyAmenities = () => {
         const detailedAmenities = placesDetails.filter(detail => detail !== null).map(detail => ({
           name: detail.name,
           vicinity: detail.vicinity,
-          rating: detail.rating || 'Rating not available',
-          openNow: detail.opening_hours ? (detail.opening_hours.open_now ? 'Open' : 'Closed') : 'Opening hours not available',
+          rating: detail.rating || 'N/A',
+          openNow: detail.opening_hours ? (detail.opening_hours.open_now ? 'Open' : 'Closed') : 'Unknown',
           reviews: detail.reviews || [],
           photoUrl: detail.photoUrl,
           openingHours: detail.openingHours,
+          phone: detail.formatted_phone_number || null,
+          website: detail.website || null,
         }));
 
         setAmenities(detailedAmenities);
       }
-      else if (results.length===0 || amenities.length === 0) {
-        
+      else if (results.length === 0 || amenities.length === 0) {
         toast.info('No amenities found!');
       }
       else if (status !== window.google.maps.places.PlacesServiceStatus.OK || results.length === 0) {
-        
         toast.error('Failed to find amenities or no amenities available for the selected type.');
       }
     });
   };
 
-    /**
- * Updates the amenityType state based on user selection.
- * This function is triggered by user interaction with the amenity type selection
- * controls, allowing the user to change the type of amenities they wish to search for.
- */
-  const handleAmenityTypeChange = (e) => {
-    setAmenityType(e.target.value);
+  const handleAmenityTypeChange = (value) => {
+    setAmenityType(value);
   };
 
   const handleBackClick = () => {
     window.history.back();
   };
 
+  const amenityOptions = [
+    { value: 'subway_station', label: 'MRT Station', icon: '🚇', gradient: 'from-purple-500 to-pink-500' },
+    { value: 'bus_station', label: 'Bus Stop', icon: '🚌', gradient: 'from-blue-500 to-cyan-500' },
+    { value: 'hospital', label: 'Hospital', icon: '🏥', gradient: 'from-red-500 to-rose-500' },
+    { value: 'restaurant', label: `${nation} Eateries`, icon: '🍽️', gradient: 'from-orange-500 to-amber-500' },
+    { value: 'grocery_or_supermarket', label: `${nation} Shops`, icon: '🛒', gradient: 'from-green-500 to-emerald-500' },
+  ];
+
   return (
-    <div className="amenities-main">
-      <div className="header-container">
-        <img src={backImage} alt="back" className="back-image" onClick={handleBackClick}/>
-        <img src={logoImage} alt="Logo" className="logo-image"/>
-        <div></div>
-      </div>
-  
-      <div className="sticky-controls">
-        <label>
-          <input type="radio" name="amenityType" value="subway_station" onChange={handleAmenityTypeChange}/> MRT Station
-        </label>
-        <label>
-          <input type="radio" name="amenityType" value="bus_station" onChange={handleAmenityTypeChange}/> Bus Stop
-        </label>
-        <label>
-          <input type="radio" name="amenityType" value="hospital" onChange={handleAmenityTypeChange}/> Hospital
-        </label>
-        <label>
-          <input type="radio" name="amenityType" value="restaurant" onChange={handleAmenityTypeChange}/> {nation} Eateries
-        </label>
-        <label>
-          <input type="radio" name="amenityType" value="grocery_or_supermarket" onChange={handleAmenityTypeChange}/> {nation} Shops
-        </label>
-      </div>
+    <div className="fixed inset-0 overflow-hidden bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${bgdImage})` }}>
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-orange-50/80 via-amber-50/70 to-orange-100/80 dark:from-slate-900/80 dark:via-slate-800/70 dark:to-slate-900/80" />
+      
+      {/* Container */}
+      <div className="h-full w-full overflow-y-auto relative z-10">
+        <div className="max-w-6xl w-full mx-auto flex flex-col min-h-full p-4 sm:p-6 lg:p-8">
+          
+          {/* Header */}
+          <div className="glass-card mb-6 p-4 sm:p-6 rounded-2xl border border-white/20 backdrop-blur-2xl bg-white/40 dark:bg-slate-900/40 shadow-xl">
+            <div className="flex items-center justify-between">
+              {/* Back Button */}
+              <button
+                onClick={handleBackClick}
+                className="group flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl bg-white/50 dark:bg-slate-800/50 hover:bg-white/70 dark:hover:bg-slate-800/70 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-orange-500/50"
+                aria-label="Back"
+              >
+                <HiArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 dark:text-gray-300 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors" />
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
+                  Back
+                </span>
+              </button>
 
-      <button onClick={fetchAmenities}>Find Nearest Amenities</button>
-      <div id="map" style={{ height: '50%', width: '80%', maxHeight: '300px'}}></div>
-  
-      {/* Simple list to display amenities */}
+              {/* Logo - Centered */}
+              <div className="absolute left-1/2 transform -translate-x-1/2">
+                <img 
+                  src={logoImage} 
+                  alt="NexusNTU Logo" 
+                  className="h-10 sm:h-12 w-auto object-contain"
+                />
+              </div>
 
-      <div className="amenities-list">
-        {amenities.map((amenity, index) => (
-        <div key={index} className="amenity-item">
-          <div className="amenity-main">
-            <img src={amenity.photoUrl} alt={`Thumbnail of ${amenity.name}`} />
-            <div className="amenity-info">
-              <p><strong>{amenity.name}</strong></p>
-              <p>{amenity.vicinity}</p>
-              <p>Rating: {amenity.rating}, Status: {amenity.openNow}</p>
-              <div className="opening-hours">
-                {amenity.openingHours.map((line, idx) => (
-                  <div key={idx}>{line}</div>
-                ))}
+              {/* Spacer */}
+              <div className="w-20 sm:w-24"></div>
+            </div>
+          </div>
+
+          {/* Title Card */}
+          <div className="glass-card mb-6 p-6 rounded-2xl border border-white/20 backdrop-blur-2xl bg-white/40 dark:bg-slate-900/40 shadow-xl">
+            <div className="flex items-center justify-center gap-3">
+              <HiMapPin className="w-8 h-8 text-orange-500" />
+              <div>
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white text-center">
+                  Nearby Amenities
+                </h2>
+                <p className="text-sm text-gray-600 dark:text-gray-400 text-center mt-1">
+                  Discover places around you
+                </p>
               </div>
             </div>
           </div>
-          <ul className="amenity-reviews">
-            {amenity.reviews.slice(0, 3).map((review, reviewIdx) => (
-              <li key={reviewIdx}>
-                "{review.text}" - <strong>{review.author_name}</strong>
-              </li>
-            ))}
-          </ul>
-        </div>
-  ))}
-</div>
 
+          {/* Amenity Type Selection */}
+          <div className="glass-card mb-6 p-6 rounded-2xl border border-white/20 backdrop-blur-2xl bg-white/40 dark:bg-slate-900/40 shadow-xl">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              Select Amenity Type
+            </h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+              {amenityOptions.map((option) => (
+                <button
+                  key={option.value}
+                  onClick={() => handleAmenityTypeChange(option.value)}
+                  className={`group p-4 rounded-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-orange-500/50 ${
+                    amenityType === option.value
+                      ? 'bg-gradient-to-br ' + option.gradient + ' shadow-lg scale-105'
+                      : 'bg-white/50 dark:bg-slate-800/50 hover:bg-white/70 dark:hover:bg-slate-800/70'
+                  }`}
+                >
+                  <div className="text-3xl mb-2">{option.icon}</div>
+                  <p className={`text-xs font-semibold text-center ${
+                    amenityType === option.value
+                      ? 'text-white'
+                      : 'text-gray-700 dark:text-gray-300'
+                  }`}>
+                    {option.label}
+                  </p>
+                </button>
+              ))}
+            </div>
+            
+            {/* Search Button */}
+            <button 
+              onClick={fetchAmenities}
+              disabled={!amenityType}
+              className="mt-6 w-full py-4 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-orange-500/50 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.02] active:scale-[0.98]"
+            >
+              Find Nearest Amenities
+            </button>
+          </div>
+
+          {/* Map */}
+          <div className="glass-card mb-6 p-4 rounded-2xl border border-white/20 backdrop-blur-2xl bg-white/40 dark:bg-slate-900/40 shadow-xl overflow-hidden">
+            <div 
+              id="map" 
+              className="w-full h-64 sm:h-80 lg:h-96 rounded-xl overflow-hidden"
+            />
+          </div>
+
+          {/* Amenities List */}
+          {amenities.length > 0 && (
+            <div className="space-y-4 pb-6">
+              {amenities.map((amenity, index) => (
+                <div 
+                  key={index} 
+                  className="glass-card p-6 rounded-2xl border border-white/20 backdrop-blur-2xl bg-white/40 dark:bg-slate-900/40 shadow-xl hover:shadow-2xl transition-all duration-300"
+                  style={{ animation: `fadeIn 0.6s ease-out ${index * 0.1}s both` }}
+                >
+                  {/* Main Content */}
+                  <div className="flex flex-col sm:flex-row gap-4 mb-4">
+                    {/* Image */}
+                    <div className="w-full sm:w-48 h-48 rounded-xl overflow-hidden flex-shrink-0 bg-gray-200 dark:bg-slate-700">
+                      <img 
+                        src={amenity.photoUrl} 
+                        alt={amenity.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+
+                    {/* Info */}
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                        {amenity.name}
+                      </h3>
+                      
+                      <div className="flex items-center gap-2 mb-2">
+                        <HiMapPin className="w-5 h-5 text-orange-500" />
+                        <p className="text-sm text-gray-700 dark:text-gray-300">
+                          {amenity.vicinity}
+                        </p>
+                      </div>
+
+                      <div className="flex flex-wrap items-center gap-4 mb-3">
+                        {/* Rating */}
+                        {amenity.rating !== 'N/A' && (
+                          <div className="flex items-center gap-1 px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg">
+                            <HiStar className="w-4 h-4 text-yellow-500" />
+                            <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                              {amenity.rating}
+                            </span>
+                          </div>
+                        )}
+
+                        {/* Status */}
+                        <div className={`px-3 py-1 rounded-lg ${
+                          amenity.openNow === 'Open'
+                            ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300'
+                            : amenity.openNow === 'Closed'
+                            ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300'
+                            : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+                        }`}>
+                          <span className="text-sm font-semibold">
+                            {amenity.openNow}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Contact Info */}
+                      <div className="flex flex-wrap gap-3">
+                        {amenity.phone && (
+                          <a 
+                            href={`tel:${amenity.phone}`}
+                            className="flex items-center gap-1 text-sm text-blue-600 dark:text-blue-400 hover:underline"
+                          >
+                            <HiPhone className="w-4 h-4" />
+                            {amenity.phone}
+                          </a>
+                        )}
+                        {amenity.website && (
+                          <a 
+                            href={amenity.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1 text-sm text-blue-600 dark:text-blue-400 hover:underline"
+                          >
+                            <HiGlobeAlt className="w-4 h-4" />
+                            Website
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Opening Hours */}
+                  {amenity.openingHours[0] !== 'Opening hours not available' && (
+                    <details className="mb-4">
+                      <summary className="flex items-center gap-2 cursor-pointer text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
+                        <HiClock className="w-4 h-4" />
+                        Opening Hours
+                      </summary>
+                      <div className="mt-2 ml-6 space-y-1">
+                        {amenity.openingHours.map((line, idx) => (
+                          <p key={idx} className="text-sm text-gray-600 dark:text-gray-400">
+                            {line}
+                          </p>
+                        ))}
+                      </div>
+                    </details>
+                  )}
+
+                  {/* Reviews */}
+                  {amenity.reviews.length > 0 && (
+                    <div>
+                      <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                        Reviews
+                      </h4>
+                      <div className="space-y-2">
+                        {amenity.reviews.slice(0, 3).map((review, reviewIdx) => (
+                          <div 
+                            key={reviewIdx}
+                            className="p-3 rounded-lg bg-white/50 dark:bg-slate-800/50 border border-white/30 dark:border-slate-700/50"
+                          >
+                            <p className="text-sm text-gray-700 dark:text-gray-300 italic mb-1">
+                              "{review.text}"
+                            </p>
+                            <p className="text-xs font-semibold text-gray-600 dark:text-gray-400">
+                              — {review.author_name}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Empty State */}
+          {amenities.length === 0 && (
+            <div className="glass-card p-12 rounded-2xl border border-white/20 backdrop-blur-2xl bg-white/40 dark:bg-slate-900/40 shadow-xl text-center">
+              <HiMapPin className="w-16 h-16 text-gray-400 dark:text-gray-600 mx-auto mb-4" />
+              <p className="text-gray-600 dark:text-gray-400">
+                Select an amenity type and search to see results
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <style>{`
+        .glass-card {
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.4),
+            rgba(255, 255, 255, 0.2)
+          );
+        }
+        
+        .dark .glass-card {
+          background: linear-gradient(
+            135deg,
+            rgba(15, 23, 42, 0.4),
+            rgba(15, 23, 42, 0.2)
+          );
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+          }
+        }
+
+        details summary::-webkit-details-marker {
+          display: none;
+        }
+      `}</style>
     </div>
   );
 };
 
 export default NearbyAmenities;
-
