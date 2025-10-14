@@ -48,6 +48,7 @@ const NearbyAmenities = () => {
   }, [userProfile]);
 
   const initializeMap = useCallback(() => {
+    console.log(navigator.geolocation);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         const currentLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
@@ -82,99 +83,153 @@ const NearbyAmenities = () => {
     setMarkers([]); 
   };
 
-  const fetchAmenities = () => {
-    if (!map) return;
+  // put this helper above fetchAmenities
+const waitForMapIdle = (m) =>
+  new Promise((resolve) => {
+    if (!m) return resolve();
+    window.google.maps.event.addListenerOnce(m, 'idle', resolve);
+  });
 
+  const fetchAmenities = async () => {
+    // 1) basic guards
+    if (!window.google?.maps?.places) {
+      toast.error('Google Places not loaded yet. Please wait a moment and try again.');
+      return;
+    }
+    if (!map) {
+      toast.error('Map is not ready yet.');
+      return;
+    }
     if (!amenityType) {
-      toast.info("Please select an amenity type before searching.");
+      toast.info('Please select an amenity type first.');
       return;
     }
 
-    clearMarkers(); 
+    // 2) wait until the map has rendered at least once
+    await waitForMapIdle(map);
 
-    const service = new window.google.maps.places.PlacesService(map);
+    // 3) get a safe LatLngLiteral for the center
+    const centerLatLng = map.getCenter();
+    if (!centerLatLng) {
+      toast.error('Missing map center. Reload the page and try again.');
+      return;
+    }
+    const center = centerLatLng.toJSON(); // -> { lat: number, lng: number }
+
+    // 4) clear any old markers
+    clearMarkers();
+
+    // 5) build a bullet-proof request
     const request = {
-      location: location,
-      radius: '500',
-      type: [amenityType],
+      location: center,        // LatLngLiteral
+      radius: 500,             // number (meters)
+      type: amenityType,       // string (NOT an array) e.g. "bus_station"
     };
-
-    if (amenityType === 'restaurant' || amenityType === "grocery_or_supermarket") {
+    if ((amenityType === 'restaurant' || amenityType === 'grocery_or_supermarket') && nation) {
       request.keyword = nation;
     }
 
-    service.nearbySearch(request, async (results, status) => {
-      if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-        const newMarkers = results.map(place => {
+    // 6) perform the search with full status handling
+    const service = new window.google.maps.places.PlacesService(map);
+    service.nearbySearch(request, async (results = [], status) => {
+      const Status = window.google.maps.places.PlacesServiceStatus;
+      console.log('nearbySearch status:', status);
+
+      if (status === Status.OK && Array.isArray(results) && results.length) {
+        // create markers
+        const newMarkers = results.map((place) => {
           const marker = new window.google.maps.Marker({
             position: place.geometry.location,
-            map: map,
+            map,
             title: place.name,
           });
-         
+
           const infoWindow = new window.google.maps.InfoWindow({
             content: `
               <div style="padding: 8px;">
                 <h3 style="margin: 0 0 4px 0; font-size: 16px; font-weight: 600;">${place.name}</h3>
-                <p style="margin: 0 0 8px 0; color: #666; font-size: 14px;">${place.vicinity}</p>
-                <a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(place.vicinity)}" target="_blank" style="color: #f97316; text-decoration: none; font-weight: 500;">View on Google Maps →</a>
+                <p style="margin: 0 0 8px 0; color: #666; font-size: 14px;">${place.vicinity ?? ''}</p>
+                <a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(place.vicinity ?? place.name)}"
+                  target="_blank" style="color: #f97316; text-decoration: none; font-weight: 500;">
+                  View on Google Maps →
+                </a>
               </div>
-            `
+            `,
           });
-  
+
           marker.addListener('click', () => {
-            if (window.currentInfoWindow) {
-              window.currentInfoWindow.close();
-            }
+            if (window.currentInfoWindow) window.currentInfoWindow.close();
             window.currentInfoWindow = infoWindow;
-            infoWindow.open({
-              anchor: marker,
-              map,
-              shouldFocus: false,
-            });
+            infoWindow.open({ anchor: marker, map, shouldFocus: false });
           });
-  
+
           return marker;
         });
 
         setMarkers(newMarkers);
-        const placesDetailsPromises = results.slice(0, 5).map(place =>
-          new Promise((resolve) => {
-            service.getDetails({placeId: place.place_id}, (detail, status) => {
-              if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-                const photoUrl = detail.photos && detail.photos.length > 0
-                  ? detail.photos[0].getUrl({'maxWidth': 300, 'maxHeight': 200})
-                  : defaultAm;
-                const openingHours = detail.opening_hours ? detail.opening_hours.weekday_text : ['Opening hours not available'];
-                resolve({...detail, photoUrl, openingHours});
-              } else {
-                resolve(null);
-              }
-            });
-          })
+
+        // fetch details for first 5 places
+        const details = await Promise.all(
+          results.slice(0, 5).map(
+            (place) =>
+              new Promise((resolve) => {
+                service.getDetails({ placeId: place.place_id }, (detail, s) => {
+                  if (s === Status.OK && detail) {
+                    const photoUrl =
+                      detail.photos?.[0]?.getUrl({ maxWidth: 300, maxHeight: 200 }) || defaultAm;
+                    const openingHours =
+                      detail.opening_hours?.weekday_text || ['Opening hours not available'];
+
+                    resolve({
+                      name: detail.name,
+                      vicinity: detail.vicinity,
+                      rating: detail.rating ?? 'N/A',
+                      openNow: detail.opening_hours
+                        ? (detail.opening_hours.open_now ? 'Open' : 'Closed')
+                        : 'Unknown',
+                      reviews: detail.reviews || [],
+                      photoUrl,
+                      openingHours,
+                      phone: detail.formatted_phone_number || null,
+                      website: detail.website || null,
+                    });
+                  } else {
+                    resolve(null);
+                  }
+                });
+              })
+          )
         );
 
-        const placesDetails = await Promise.all(placesDetailsPromises);
-        const detailedAmenities = placesDetails.filter(detail => detail !== null).map(detail => ({
-          name: detail.name,
-          vicinity: detail.vicinity,
-          rating: detail.rating || 'N/A',
-          openNow: detail.opening_hours ? (detail.opening_hours.open_now ? 'Open' : 'Closed') : 'Unknown',
-          reviews: detail.reviews || [],
-          photoUrl: detail.photoUrl,
-          openingHours: detail.openingHours,
-          phone: detail.formatted_phone_number || null,
-          website: detail.website || null,
-        }));
+        setAmenities(details.filter(Boolean));
+        return;
+      }
 
-        setAmenities(detailedAmenities);
+      // explicit non-OK statuses
+      if (status === Status.ZERO_RESULTS) {
+        toast.info('No amenities found nearby.');
+        setAmenities([]);
+        return;
       }
-      else if (results.length === 0 || amenities.length === 0) {
-        toast.info('No amenities found!');
+      if (status === Status.REQUEST_DENIED) {
+        toast.error('Places request denied. Check API key restrictions and ensure Places API is enabled.');
+        return;
       }
-      else if (status !== window.google.maps.places.PlacesServiceStatus.OK || results.length === 0) {
-        toast.error('Failed to find amenities or no amenities available for the selected type.');
+      if (status === Status.INVALID_REQUEST) {
+        toast.error('Invalid request sent to Places. Double-check parameters.');
+        return;
       }
+      if (status === Status.OVER_QUERY_LIMIT) {
+        toast.error('You hit the query limit. Try again later.');
+        return;
+      }
+      if (status === Status.UNKNOWN_ERROR) {
+        toast.error('Temporary Places error. Please try again.');
+        return;
+      }
+
+      // fallback
+      toast.error('Search failed. Please try again later.');
     });
   };
 
