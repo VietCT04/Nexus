@@ -1,10 +1,8 @@
-# Cross Border
-
-<img width="1000" alt="Screenshot 2024-04-07 at 2 42 28 AM" src="https://github.com/softwarelab3/2006-SCSD-SimpleOne/assets/115227638/abfbc891-dfb9-4263-acb6-a720c912213c">
+# NexusNTU
 
 ## Overview
 
-Cross Border is a web application developed by Team SimpleOne, aimed at improving the living and working experience of migrant workers in Singapore. By providing access to essential services and information, Cross Border serves as a user-centric platform that navigates users through daily life in Singapore, offering features like a currency exchange calculator, navigation routes, directory of nearby amenities, personalized news feed, and an AI chatbot for assistance.
+NexusNTU is an all-in-one web application designed to be a comprehensive digital companion for international students at Nanyang Technological University (NTU). The project aims to solve the problem of a fragmented and inefficient onboarding process by centralizing essential information and services into a single, user-friendly platform. This includes campus navigation, access to university resources, AI-powered support, and personalized content hubs to help students integrate smoothly into university life.
 
 ## Features
 
@@ -18,13 +16,8 @@ News Viewer: Delivers a personalized news feed to keep users informed about the 
 
 AI Chatbot: Answers user queries, providing an interactive and helpful resource for information.<br>
 
-## Tech Stack Used
-
-<img width="547" alt="Screenshot 2024-04-07 at 2 36 05 AM" src="https://github.com/softwarelab3/2006-SCSD-SimpleOne/assets/115227638/2a40b05c-b46c-469e-86a6-a377209c653b">
-
-### Front-end was mainly made using React (version 18.2.0) and Back-end was mainly made using Node.js (version 21.4.0)
-
 ## Directory Structure
+
 ```plaintext
 Lab 4 Deliverables/Source Code/
 ├── client/
@@ -63,11 +56,15 @@ Copy this code block to your IDE terminal
 git clone https://github.com/softwarelab3/2006-SCSD-SimpleOne.git SCSDSimpleOneCrossBorder2006
 cd SCSDSimpleOneCrossBorder2006
 ```
+
 After executing the above code block, you will need to create a few files to hold the API keys for the app to access.
+
 ## You will need to obtain the API keys yourself. The source for each API key has been mentioned in Appendix at the end of this Readme file.
+
 Follow the steps below to create the files-:
+
 1. Create a .env file in the "SCSDSimpleOneCrossBorder2006/Lab 4 Deliverables/Source Code" directory. Enter the following in it (replace the empty strings in each line with respective API keys)-: <br>
-   
+
    MONGO_URI='' <br>
    JWT_SECRET='' <br>
    AWS_ACCESS_KEY_ID="" <br>
@@ -75,14 +72,14 @@ Follow the steps below to create the files-:
    AWS_REGION="" <br>
    AWS_BUCKET_NAME="" <br>
 
-2. Open the API_KEYS.jsx file in IDE editor. The path to the file is "SCSDSimpleOneCrossBorder2006/Lab 4 Deliverables/Source Code/client/src/pages/API_KEYS.jsx". Replace the empty strings with   
+2. Open the API_KEYS.jsx file in IDE editor. The path to the file is "SCSDSimpleOneCrossBorder2006/Lab 4 Deliverables/Source Code/client/src/pages/API_KEYS.jsx". Replace the empty strings with  
    respective API keys.
 
    const NEWS_API_KEY=""; <br>
    const X_RapidAPI_Key=''; <br>
    const GOOGLE_MAPS_API_KEY=''; <br>
 
-3. Open the firebase.config.js file in IDE editor. The path to the file is "SCSDSimpleOneCrossBorder2006/Lab 4 Deliverables/Source Code/client/src/pages/firebase.config.js". Complete the firebase 
+3. Open the firebase.config.js file in IDE editor. The path to the file is "SCSDSimpleOneCrossBorder2006/Lab 4 Deliverables/Source Code/client/src/pages/firebase.config.js". Complete the firebase
    configuration credentials in the section highlighted below.
 
    const firebaseConfig = { <br>
@@ -95,7 +92,7 @@ Follow the steps below to create the files-:
    measurementId: ""<br>
    };<br>
 
-4. Open the GEMINI_API_KEY.py file in IDE editor. The path to the file is "SCSDSimpleOneCrossBorder2006/Lab 4 Deliverables/Source Code/client/src/pages/Bot/geminichat/GEMINI_API_KEY.py". Replace the    
+4. Open the GEMINI_API_KEY.py file in IDE editor. The path to the file is "SCSDSimpleOneCrossBorder2006/Lab 4 Deliverables/Source Code/client/src/pages/Bot/geminichat/GEMINI_API_KEY.py". Replace the  
    empty string with Gemini API key.
 
    Gemini_API_KEY=""
@@ -109,54 +106,70 @@ If yes, then run this code-:
 cd "Lab 4 Deliverables"
 cd "Source Code"
 ```
+
 After that, create 3 terminals using Split Terminal command ( we will refer to them henceforth as T1, T2 and T3)
 
 In T1, run this code-:
+
 ```
 sudo npm install
 ```
+
 In T2, run this code-:
+
 ```
 cd client
 sudo npm install
 ```
+
 In T3, run this code-:
+
 ```
 cd client/src/pages/Bot/geminichat
 pip install -r requirements.txt
 streamlit run 1_Gemini_Pro.py
 ```
+
 This will immediately launch the Gemini chatbot in your browser. You can close the tab and return to the terminal
 
 Run this below code segment for setting up Redis server in PC terminal (not IDE terminal)
+
 ```
 brew update
 brew install redis
 brew services start redis
 redis-cli ping
 ```
+
 After running "redis-cli ping" command you will get a PONG response which confirms that the Redis server has successfully started.
 
 Back to T1, run this code-:
+
 ```
 sudo node app.js
 ```
+
 This command may give some errors of some node modules not getting located. In such a scenario, simply delete the node_modules directory in the Source Code directory and rerun this command-:
 
 ```
 sudo npm install
 sudo node app.js
 ```
+
 The command can be considered to be successful once you get this response in T1-:
+
 ```plaintext
 Server is listening on port 3000
 ```
+
 (You can ignore any other warnings in T1 that may come along with this response)
 
 Then in T2, run this code-:
+
 ```
 sudo npm run dev
 ```
+
 The command can be considered to be successful once you get this response in T2-:
 
 ```plaintext
@@ -169,13 +182,14 @@ The command can be considered to be successful once you get this response in T2-
   ➜  Local:   http://localhost:5173/ <br>
   ➜  Network: use --host to expose<br>
   ➜  press h + enter to show help<br>
- ```
-  
+```
+
 (You can ignore any other warnings in T2 that may come along with this response)
 
 ### Next, copy this URL "http://localhost:5173/" in your browser address bar and the App (hosted on localhost) will be successfully running with the Landing page visible
 
 ## Appendix
+
 API Documentations and Source of API keys/Configuration credentials-:
 
 Mongodb-: https://www.mongodb.com/cloud/atlas/register?utm_source=google&utm_campaign=search_gs_pl_evergreen_atlas_general_prosp-brand_gic-null_apac-sg_ps-all_desktop_eng_lead&utm_term=mongo%20database&utm_medium=cpc_paid_search&utm_ad=p&utm_ad_campaign_id=7854364247&adgroup=81978310976&cq_cmp=7854364247&gad_source=1&gclid=Cj0KCQjw5cOwBhCiARIsAJ5njubc1O2i4Kgp3TEFhi7aDbnvPdH22XjA5FeL6UVEwgTItIjvJRji1zQaAksMEALw_wcB
@@ -192,12 +206,4 @@ News API-: https://newsapi.org/
 
 Currency-converter API-: https://rapidapi.com/airaudoeduardo/api/currency-converter241
 
-## Development Team
-
-Aishwarya Anand <br>
-Banerjee Mohor <br>
-Chan Jie Ying Jolene <br>
-Chen Guan Zong Aaron <br>
-Poonawala Mustafa Jabir <br>
-
-### Prepared by Team SimpleOne at Nanyang Technological University for course SC2006 Software Engineering
+### Prepared by Team CtrlAltElite at Nanyang Technological University for course SC3040 Advanced Software Engineering
