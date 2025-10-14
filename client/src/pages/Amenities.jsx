@@ -83,15 +83,29 @@ const NearbyAmenities = () => {
     setMarkers([]); 
   };
 
-  // put this helper above fetchAmenities
-const waitForMapIdle = (m) =>
+const waitForMapIdle = (m, msFallback = 800) =>
   new Promise((resolve) => {
     if (!m) return resolve();
-    window.google.maps.event.addListenerOnce(m, 'idle', resolve);
+
+    const center = m.getCenter();
+    const bounds = m.getBounds();
+    const zoom = m.getZoom();
+    if (center && bounds && typeof zoom === 'number') {
+      return setTimeout(resolve, 0);
+    }
+
+    const once = window.google.maps.event.addListenerOnce(m, 'idle', () => {
+      try { window.google.maps.event.removeListener(once); } catch {}
+      resolve();
+    });
+
+    setTimeout(() => {
+      try { window.google.maps.event.removeListener(once); } catch {}
+      resolve(); // don’t block if idle never fires
+    }, msFallback);
   });
 
   const fetchAmenities = async () => {
-    // 1) basic guards
     if (!window.google?.maps?.places) {
       toast.error('Google Places not loaded yet. Please wait a moment and try again.');
       return;
@@ -105,21 +119,17 @@ const waitForMapIdle = (m) =>
       return;
     }
 
-    // 2) wait until the map has rendered at least once
     await waitForMapIdle(map);
 
-    // 3) get a safe LatLngLiteral for the center
     const centerLatLng = map.getCenter();
     if (!centerLatLng) {
       toast.error('Missing map center. Reload the page and try again.');
       return;
     }
-    const center = centerLatLng.toJSON(); // -> { lat: number, lng: number }
+    const center = centerLatLng.toJSON();
 
-    // 4) clear any old markers
     clearMarkers();
 
-    // 5) build a bullet-proof request
     const request = {
       location: center,        // LatLngLiteral
       radius: 500,             // number (meters)
