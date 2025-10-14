@@ -19,7 +19,7 @@ AI Chatbot: Answers user queries, providing an interactive and helpful resource 
 ## Directory Structure
 
 ```plaintext
-Lab 4 Deliverables/Source Code/
+Nexus/
 ├── client/
 │   ├── public/
 │   └── src/
