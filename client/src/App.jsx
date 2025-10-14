@@ -24,6 +24,7 @@ import ProfilePic from "./pages/ProfilePic.jsx";
 import ChangePassword from "./pages/ChangePassword.jsx";
 import ResetPassword from "./pages/ResetPassword.jsx";
 import Settings from "./pages/Settings.jsx";
+import QuickLinks from "./pages/QuickLinks.jsx";
 
 const router = createBrowserRouter([
   {
@@ -109,8 +110,11 @@ const router = createBrowserRouter([
       {
         path: "securityq",
         element: <SecurityQuestion/>,
+      },
+      {
+        path: "quicklinks",
+        element: <QuickLinks/>,
       }
-
 
     ],
   },

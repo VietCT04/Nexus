@@ -58,6 +58,7 @@
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
   background-color: #cc0000;
   transition: all 0.2s ease;
+  border-width: 0px;
 }
 
 .settings-box .icon-button img {

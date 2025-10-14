@@ -19,3 +19,4 @@ export { default as ProfilePic} from "./ProfilePic";
 export { default as ChangePassword} from "./ChangePassword";
 export { default as ResetPassword} from "./ResetPassword";
 export { default as Settings } from "./Settings";
+export { default as QuickLinks } from "./QuickLinks";
